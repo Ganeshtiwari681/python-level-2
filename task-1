@@ -1,0 +1,25 @@
+import re
+
+def validate_credit_card(card_number):
+
+    card_number = re.sub(r'\D', '', card_number)
+
+    sum = 0
+    for i, digit in enumerate(reversed(card_number)):
+        if i % 2 == 0:
+            sum += int(digit)
+        else:
+            doubled = int(digit) * 2
+            if doubled > 9:
+                sum += doubled // 10 + doubled % 10
+            else:
+                sum += doubled
+
+    return sum % 10 == 0
+
+# Test the function with some example credit card numbers
+print(validate_credit_card("4532015112830366"))  # Visa
+print(validate_credit_card("5541808181818252"))  # Mastercard
+print(validate_credit_card("341234567890123"))   # American Express
+print(validate_credit_card("6011513498785923"))  # Discover
+print(validate_credit_card("123456789012345"))   #invalid
